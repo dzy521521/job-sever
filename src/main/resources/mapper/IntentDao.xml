@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.IntentDao" >
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Intent" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="role" property="role" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="job" property="job" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="salary" property="salary" jdbcType="VARCHAR" />
+
+        <result column="education" property="education" jdbcType="VARCHAR" />
+        <result column="work_time" property="workTime" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+
+        <result column="require_" property="require" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectIntent" resultMap="BaseResultMap" parameterType="com.example.demo.entity.temp.RelationTemp">
+        select
+        *
+        from intent
+        where role = #{role,jdbcType=VARCHAR}
+              and job = #{job,jdbcType=VARCHAR}
+        <if test="education != null" >
+            and education = #{education,jdbcType=VARCHAR}
+        </if>
+        <if test="salary != null" >
+            and salary = #{salary,jdbcType=VARCHAR}
+        </if>
+        <if test="city != null" >
+            and city = #{city,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+
+    <select id="getIntentsByUser" resultMap="BaseResultMap" parameterType="com.example.demo.entity.User">
+        select
+        *
+        from intent
+        where phone = #{phone,jdbcType=VARCHAR} and role = #{role,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getIntentsById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        *
+        from intent
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertIntent" parameterType="com.example.demo.entity.Intent" >
+        insert into intent (
+            phone,
+            role,
+            job,
+            city,
+            salary,
+            education,
+            work_time,
+            address,
+            require_,
+            content,
+            create_time
+        )
+        values (
+            #{phone,jdbcType=VARCHAR},
+            #{role,jdbcType=VARCHAR},
+            #{job,jdbcType=VARCHAR},
+            #{city,jdbcType=VARCHAR},
+            #{salary,jdbcType=VARCHAR},
+            #{education,jdbcType=VARCHAR},
+            #{workTime,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR},
+            #{require,jdbcType=VARCHAR},
+            #{content,jdbcType=VARCHAR},
+            #{createTime,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <delete id="deleteIntent" parameterType="com.example.demo.entity.Intent" >
+        delete from intent
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateIntent" parameterType="com.example.demo.entity.Intent" >
+        update intent
+        set
+        job = #{job,jdbcType=VARCHAR},
+        city = #{city,jdbcType=VARCHAR},
+        salary = #{salary,jdbcType=VARCHAR},
+        education = #{education,jdbcType=VARCHAR},
+        work_time = #{workTime,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        require_ = #{require,jdbcType=VARCHAR},
+        content = #{content,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

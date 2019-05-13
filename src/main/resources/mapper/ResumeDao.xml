@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.ResumeDao" >
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Resume" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="birth_time" property="birthTime" jdbcType="VARCHAR" />
+        <result column="work_time" property="workTime" jdbcType="VARCHAR" />
+
+        <result column="education" property="education" jdbcType="VARCHAR" />
+        <result column="education_exp" property="educationExp" jdbcType="VARCHAR" />
+        <result column="work_exp" property="workExp" jdbcType="VARCHAR" />
+        <result column="project_exp" property="projectExp" jdbcType="VARCHAR" />
+        <result column="good" property="good" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="getResume" resultMap="BaseResultMap" parameterType="com.example.demo.entity.User">
+        select
+        *
+        from resume
+        where phone = #{phone,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertResume" parameterType="com.example.demo.entity.Resume" >
+        insert into resume (
+            phone,
+            photo,
+            name,
+            sex,
+            birth_time,
+            work_time,
+            education,
+            education_exp,
+            work_exp,
+            project_exp,
+            good
+        )
+        values (
+            #{phone,jdbcType=VARCHAR},
+            #{photo,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR},
+            #{sex,jdbcType=VARCHAR},
+            #{birthTime,jdbcType=VARCHAR},
+            #{workTime,jdbcType=VARCHAR},
+            #{education,jdbcType=VARCHAR},
+            #{educationExp,jdbcType=VARCHAR},
+            #{workExp,jdbcType=VARCHAR},
+            #{projectExp,jdbcType=VARCHAR},
+            #{good,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <update id="updateResume" parameterType="com.example.demo.entity.Resume" >
+        update resume
+        set
+        photo = #{photo,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=VARCHAR},
+        birth_time = #{birthTime,jdbcType=VARCHAR},
+        work_time = #{workTime,jdbcType=VARCHAR},
+        education = #{education,jdbcType=VARCHAR},
+        work_exp = #{workExp,jdbcType=VARCHAR},
+        project_exp = #{projectExp,jdbcType=VARCHAR},
+        good = #{good,jdbcType=VARCHAR},
+        education_exp = #{educationExp,jdbcType=VARCHAR}
+        where phone = #{phone,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

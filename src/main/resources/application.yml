@@ -1,0 +1,42 @@
+server:
+  port: 8090
+  session-timeout: 30
+  tomcat.max-threads: 0
+  tomcat.uri-encoding: UTF-8
+
+#默认使用配置
+spring:
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+  datasource:
+    url: jdbc:mysql://47.105.105.225:3306/job?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  #redis:
+   # host: localhost
+   # password:
+   # port: 6379
+   # jedis:
+   #   pool:
+    #    max-active: 8
+    #      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    #    max-wait: -1
+          # 连接池中的最大空闲连接
+     #   max-idle: 8
+          # 连接池中的最小空闲连接
+    #    min-idle: 0
+
+#公共配置与profiles选择无关
+mybatis:
+  typeAliasesPackage: com.example.demo.entity
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

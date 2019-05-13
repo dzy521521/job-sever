@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.RelationDao" >
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Relation" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="employee_intent_id" property="employeeIntentId" jdbcType="INTEGER" />
+        <result column="employer_intent_id" property="employerIntentId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="interview_time" property="interviewTime" jdbcType="VARCHAR" />
+
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="employee" property="employee" jdbcType="VARCHAR" />
+        <result column="employer" property="employer" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="getRelationAmount" resultType="java.lang.Integer" parameterType="com.example.demo.entity.Relation">
+        SELECT count(*) FROM relation
+        WHERE
+        type = #{type,jdbcType=VARCHAR} and
+        <if test="employee != null" >
+            employee = #{employee,jdbcType=VARCHAR}
+        </if>
+        <if test="employer != null" >
+            employer = #{employer,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+
+    <select id="getRelationByTypeAndRole" resultMap="BaseResultMap" parameterType="com.example.demo.entity.Relation">
+        SELECT * FROM relation
+        WHERE
+        type = #{type,jdbcType=VARCHAR} and
+        <if test="employee != null" >
+            employee = #{employee,jdbcType=VARCHAR}
+        </if>
+        <if test="employer != null" >
+            employer = #{employer,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="getRelationByIntentId" resultMap="BaseResultMap" parameterType="com.example.demo.entity.Relation">
+        SELECT * FROM relation
+        WHERE employer_intent_id = #{employerIntentId,jdbcType=INTEGER}
+        and employee = #{employee,jdbcType=VARCHAR}
+        and employer = #{employer,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getRelationById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT * FROM relation
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateRelation" parameterType="com.example.demo.entity.Relation" >
+        update relation
+        set
+        address = #{address,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        interview_time = #{interviewTime,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <insert id="insertRelation" parameterType="com.example.demo.entity.Relation" >
+        insert into relation (
+            employee_intent_id,
+            employer_intent_id,
+            create_time,
+            type,
+            employee,
+            employer,
+            interview_time,
+            address
+        )
+        values (
+            #{employeeIntentId,jdbcType=VARCHAR},
+            #{employerIntentId,jdbcType=VARCHAR},
+            #{createTime,jdbcType=VARCHAR},
+            #{type,jdbcType=VARCHAR},
+            #{employee,jdbcType=VARCHAR},
+            #{employer,jdbcType=VARCHAR},
+            #{interviewTime,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR}
+            )
+    </insert>
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.CompanyDao" >
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Company" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="logo" property="logo" jdbcType="VARCHAR" />
+        <result column="company_time" property="companyTime" jdbcType="VARCHAR" />
+        <result column="des" property="des" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="photo1" property="photo1" jdbcType="VARCHAR" />
+        <result column="photo2" property="photo2" jdbcType="VARCHAR" />
+        <result column="photo3" property="photo3" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="getCompany" resultMap="BaseResultMap" parameterType="com.example.demo.entity.User">
+        select
+        *
+        from company
+        where phone = #{phone,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertCompany" parameterType="com.example.demo.entity.Company" >
+        insert into company (
+            phone,
+            name,
+            logo,
+            company_time,
+            des,
+            address,
+            photo1,
+            photo2,
+            photo3,
+            status
+        )
+        values (
+            #{phone,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR},
+            #{logo,jdbcType=VARCHAR},
+            #{companyTime,jdbcType=VARCHAR},
+            #{des,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR},
+            #{photo1,jdbcType=VARCHAR},
+            #{photo2,jdbcType=VARCHAR},
+            #{photo3,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <update id="updateCompany" parameterType="com.example.demo.entity.Company" >
+        update company
+        set
+        name = #{name,jdbcType=VARCHAR},
+        logo = #{logo,jdbcType=VARCHAR},
+        company_time = #{companyTime,jdbcType=VARCHAR},
+        des = #{des,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        photo1 = #{photo1,jdbcType=VARCHAR},
+        photo2 = #{photo2,jdbcType=VARCHAR},
+        photo3 = #{photo3,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR}
+        where phone = #{phone,jdbcType=VARCHAR}
+    </update>
+
+</mapper>
